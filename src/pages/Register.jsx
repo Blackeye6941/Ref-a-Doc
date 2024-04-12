@@ -30,7 +30,7 @@ const Register = () => {
             </div>
             <button className="rounded-xl ml-[18rem] my-8 text-white bg-red hover:bg-light-red mb-[20px] text-[20px] py-2 px-5">Sign Up</button>
            </form>
-           <h1 className='text-[20px] pb-[20px]'>Already have an account? <Link to='/login' className='text-blue'>Login here</Link></h1>
+           <h1 className='text-[20px] pb-[20px] pl-10'>Already have an account? <Link to='/login' className='text-blue'>Login here</Link></h1>
         </div>
       </div>
     </>
