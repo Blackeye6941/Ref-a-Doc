@@ -9,8 +9,9 @@ const Register = () => {
     email:'',
     phoneNumber: '',
     age: '',
-    userType: 'patient',
+    user_type:'patient',
     specialization: '',
+    availability:'false',
     hospital: '',
     password: ''
   });
@@ -24,7 +25,8 @@ const Register = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    console.log(formData)
     e.preventDefault();
   };
 
@@ -38,7 +40,7 @@ const Register = () => {
           <h1 className='pl-8 pt-4 text-[20px] pb-10'>Enter the details below</h1>
           <form onSubmit={handleSubmit}>
             <div className='flex md:flex-col'>
-              <label htmlFor='' className='pl-8 text-[20px] pt-10 pb-5'>
+              <label htmlFor='name' className='pl-8 text-[20px] pt-10 pb-5'>
                 Name:
               </label>
               <input
@@ -48,10 +50,12 @@ const Register = () => {
                 value={formData.name}
                 name='name'
                 onChange={handleInputChange}
+                id='name'
+                required
               />
             </div>
             <div className='flex md:flex-col'>
-              <label htmlFor='' className='pl-8 text-[20px] pt-10 pb-5'>
+              <label htmlFor='email' className='pl-8 text-[20px] pt-10 pb-5'>
                 Email:
               </label>
               <input
@@ -61,10 +65,12 @@ const Register = () => {
                 value={formData.email}
                 name='email'
                 onChange={handleInputChange}
+                id='email'
+                required
               />
             </div>
             <div className='flex md:flex-col'>
-              <label htmlFor='' className='pl-8 text-[20px] pt-10 pb-5'>
+              <label htmlFor='pn' className='pl-8 text-[20px] pt-10 pb-5'>
                 Phone Number:
               </label>
               <input
@@ -74,10 +80,12 @@ const Register = () => {
                 value={formData.phoneNumber}
                 name='phoneNumber'
                 onChange={handleInputChange}
+                id='pn'
+                required
               />
             </div>
             <div className='flex md:flex-col'>
-              <label htmlFor='' className='pl-8 text-[20px] pt-10 pb-5'>
+              <label htmlFor='age' className='pl-8 text-[20px] pt-10 pb-5'>
                 Age:
               </label>
               <input
@@ -87,16 +95,18 @@ const Register = () => {
                 value={formData.age}
                 name='age'
                 onChange={handleInputChange}
+                id='age'
+                required
               />
             </div>
             <div className='flex md:flex-col'>
-              <label htmlFor='' className='pl-8 text-[20px] pt-10 pb-5'>
+              <label htmlFor='value' className='pl-8 text-[20px] pt-10 pb-5'>
                 User Type:
               </label>
               <select
                 value={userType}
                 onChange={handleUserTypeChange}
-                className='py-2 pl-2 text-[20px] border-2 ml-5 rounded-xl'
+                className='py-2 pl-2 text-[20px] border-2 ml-5 rounded-xl' id='value' required
               >
                 <option value='patient'>Patient</option>
                 <option value='doctor'>Doctor</option>
@@ -106,7 +116,7 @@ const Register = () => {
               <>
                 <div className='flex md:flex-col'>
                   <label
-                    htmlFor=''
+                    htmlFor='spec'
                     className='pl-8 text-[20px] pt-10 pb-5'
                   >
                     Specialization:
@@ -118,11 +128,13 @@ const Register = () => {
                     value={formData.specialization}
                     name='specialization'
                     onChange={handleInputChange}
+                    id='spec'
+                    required
                   />
                 </div>
                 <div className='flex md:flex-col'>
                   <label
-                    htmlFor=''
+                    htmlFor='hos'
                     className='pl-8 text-[20px] pt-10 pb-5'
                   >
                     Hospital:
@@ -134,13 +146,15 @@ const Register = () => {
                     value={formData.hospital}
                     name='hospital'
                     onChange={handleInputChange}
+                    id='hos'
+                    required
                   />
                 </div>
               </>
             )}
 
             <div className='flex md:flex-col'>
-              <label htmlFor='' className='pl-8 text-[20px] pt-10 pb-5'>
+              <label htmlFor='pass' className='pl-8 text-[20px] pt-10 pb-5'>
                 Password:
               </label>
               <input
@@ -150,6 +164,8 @@ const Register = () => {
                 value={formData.password}
                 name='password'
                 onChange={handleInputChange}
+                id='pass'
+                required
               />
             </div>
             <button className='rounded-xl ml-[18rem] my-8 text-white bg-red hover:bg-light-red mb-[20px] text-[20px] py-2 px-5'>
