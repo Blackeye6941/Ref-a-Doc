@@ -1,0 +1,28 @@
+.hero-container {
+    position: relative;
+  }
+  
+  .text-animation {
+    opacity: 0;
+    animation: fadeInLeft 1s ease forwards;
+  }
+  
+  @keyframes fadeInLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .text-animation:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  
+  .text-animation:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  
