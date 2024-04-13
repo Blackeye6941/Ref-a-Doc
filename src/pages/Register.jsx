@@ -1,9 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { BASE_URL } from '../config';
+import {toast} from 'react-toastify';
 
 const Register = () => {
   const [userType, setUserType] = useState('patient'); // Default user type is patient
+  const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     email:'',
@@ -24,10 +27,31 @@ const Register = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    console.log(formData)
     e.preventDefault();
+    setLoading(true);
+    try {
+      const res = await fetch(`${BASE_URL/register}`,{
+        method: 'POST',
+        headers:{
+          'Content-Type' : 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      const {message} = await res.json();
+      if (!res.ok) {
+        throw new Error(message);
+        
+      }
+      setLoading(false);
+      toast.success(message);
+      navigate('/');
+
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
   return (

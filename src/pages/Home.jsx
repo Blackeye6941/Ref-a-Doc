@@ -1,7 +1,7 @@
 import React from 'react'
 import Hero from '../components/Hero'
 import { useState } from 'react'
-import Doctors from './dashboards/Doctors';
+import Doctor from './dashboards/Doctor';
 
 const Home = () => {
   const[loggedIn, setLoggedIn] = useState(false);
@@ -11,7 +11,7 @@ const Home = () => {
   }
   return (
     <>
-    <Doctors/>
+    <Doctor/>
     </>
   )
 }
