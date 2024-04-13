@@ -1,7 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useState } from 'react';
 
 const Register = () => {
+
+  const [userType, setUserType] = useState('patient'); // Default user type is patient
+
+  const handleUserTypeChange = (event) => {
+    setUserType(event.target.value);
+  };
   return (
     <>
       <div className='flex'>
@@ -25,8 +32,52 @@ const Register = () => {
                 <input type="number" placeholder='Enter your age' className="py-2 pl-2 text-[20px] border-2 ml-5 rounded-xl pr-[40px] w-[40rem]" />
             </div>
             <div className='flex md:flex-col'>
+              <label htmlFor='' className='pl-8 text-[20px] pt-10 pb-5'>
+                User Type:
+              </label>
+              <select
+                value={userType}
+                onChange={handleUserTypeChange}
+                className='py-2 pl-2 text-[20px] border-2 ml-5 rounded-xl'
+              >
+                <option value='patient'>Patient</option>
+                <option value='doctor'>Doctor</option>
+              </select>
+            </div>
+            {userType === 'doctor' && (
+              <>
+                <div className='flex md:flex-col'>
+                  <label
+                    htmlFor=''
+                    className='pl-8 text-[20px] pt-10 pb-5'
+                  >
+                    Specialization:
+                  </label>
+                  <input
+                    type='text'
+                    placeholder='Enter your specialization'
+                    className='py-2 pl-2 text-[20px] border-2 ml-5 w-[40rem] rounded-xl'
+                  />
+                </div>
+                <div className='flex md:flex-col'>
+                  <label
+                    htmlFor=''
+                    className='pl-8 text-[20px] pt-10 pb-5'
+                  >
+                    Hospital:
+                  </label>
+                  <input
+                    type='text'
+                    placeholder='Enter your hospital'
+                    className='py-2 pl-2 text-[20px] border-2 ml-5 w-[40rem] rounded-xl'
+                  />
+                </div>
+              </>
+            )}
+
+            <div className='flex md:flex-col'>
                 <label htmlFor="" className="pl-8 text-[20px] pt-10 pb-5">Password:</label>
-                <input type="text" placeholder='Enter your password' className="py-2 pl-2 text-[20px] border-2 ml-5 mb-10 pr-[40px] rounded-xl w-[40rem]" min='8'/>
+                <input type="password" placeholder='Enter your password' className="py-2 pl-2 text-[20px] border-2 ml-5 mb-10 pr-[40px] rounded-xl w-[40rem]" min='8'/>
             </div>
             <button className="rounded-xl ml-[18rem] my-8 text-white bg-red hover:bg-light-red mb-[20px] text-[20px] py-2 px-5">Sign Up</button>
            </form>
