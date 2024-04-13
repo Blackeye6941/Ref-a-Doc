@@ -24,7 +24,8 @@ export default {
       'red' : '#ff0000',
       'white': '#ffffff',
       'lightred': '#fc5454',
-      'black' : '#000000'
+      'black' : '#000000',
+      'lightgreen' : '#7bff00'
     },
     extend: {
 
