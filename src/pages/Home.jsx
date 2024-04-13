@@ -11,7 +11,7 @@ const Home = () => {
   }
   return (
     <>
-    <Doctor/>
+    <Hero/>
     </>
   )
 }
