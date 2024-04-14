@@ -1,22 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import { BASE_URL } from '../config';
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const Register = () => {
   const [userType, setUserType] = useState('patient'); // Default user type is patient
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
-    email:'',
-    phoneNumber: '',
-    age: '',
-    user_type:'patient',
-    specialization: '',
-    availability:'false',
-    hospital: '',
-    password: ''
+    email: '',
+    password: '',
+    age: 0,
+    user_type: userType,
+    patient_data: {
+      name: '',
+      age: 0,
+      gender: '',
+      phone_number: 0,
+    },
+    doctor_data: {
+      specialization: '',
+      availability: false,
+      hospital: '',
+      name: '',
+      age:0,
+      phone_number: 0,
+    },
   });
 
   const handleUserTypeChange = (event) => {
@@ -25,34 +34,62 @@ const Register = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    if (name === 'user_type') {
+      setUserType(value);
+      setFormData({
+        ...formData,
+        [name]: value,
+        doctor_data: value === 'doctor' ? { specialization: '', hospital: '' } : {},
+      });
+    } else if (name === 'gender') {
+      setFormData({
+        ...formData,
+        patient_data: {
+          ...formData.patient_data,
+          [name]: value,
+        },
+      });
+    } else if (userType === 'doctor') { // Check if userType is doctor
+      setFormData({
+        ...formData,
+        doctor_data: {
+          ...formData.doctor_data,
+          [name]: value,
+        },
+      });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
-  const navigate = useNavigate();
-
+  
+  
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch(`${BASE_URL/register}`,{
+      const res = await fetch(`${BASE_URL}/users/register/`, {
         method: 'POST',
-        headers:{
-          'Content-Type' : 'application/json',
+        headers: {
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
-      const {message} = await res.json();
+      console.log('response', res);
+      const { message } = await res.json();
       if (!res.ok) {
         throw new Error(message);
-        
       }
       setLoading(false);
       toast.success(message);
       navigate('/');
-
     } catch (err) {
       toast.error(err.message);
+      setLoading(false);
     }
   };
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -73,7 +110,7 @@ const Register = () => {
                 className='pl-2 text-[20px] border-2 ml-5 w-[40rem] rounded-xl py-2'
                 value={formData.name}
                 name='name'
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e)}
                 id='name'
                 required
               />
@@ -94,7 +131,7 @@ const Register = () => {
               />
             </div>
             <div className='flex md:flex-col'>
-              <label htmlFor='pn' className='pl-8 text-[20px] pt-10 pb-5'>
+              <label htmlFor='phoneNumber' className='pl-8 text-[20px] pt-10 pb-5'>
                 Phone Number:
               </label>
               <input
@@ -102,9 +139,9 @@ const Register = () => {
                 placeholder='Enter your phone Number'
                 className=' py-2 pl-2 text-[20px] border-2 ml-5 w-[40rem] rounded-xl'
                 value={formData.phoneNumber}
-                name='phoneNumber'
+                name='phone_number'
                 onChange={handleInputChange}
-                id='pn'
+                id='phoneNumber'
                 required
               />
             </div>
@@ -120,6 +157,21 @@ const Register = () => {
                 name='age'
                 onChange={handleInputChange}
                 id='age'
+                required
+              />
+            </div>
+            <div className='flex md:flex-col'>
+              <label htmlFor='gender' className='pl-8 text-[20px] pt-10 pb-5'>
+                Gender:
+              </label>
+              <input
+                type='text'
+                placeholder='M-male F-female O-other'
+                className='py-2 pl-2 text-[20px] border-2 ml-5 rounded-xl pr-[40px] w-[40rem]'
+                value={formData.patient_data.gender}
+                name='gender'
+                onChange={(e) => handleInputChange(e)}
+                id='gender'
                 required
               />
             </div>
@@ -149,9 +201,9 @@ const Register = () => {
                     type='text'
                     placeholder='Enter your specialization'
                     className='py-2 pl-2 text-[20px] border-2 ml-5 w-[40rem] rounded-xl'
-                    value={formData.specialization}
+                    value={formData.doctor_data.specialization}
                     name='specialization'
-                    onChange={handleInputChange}
+                    onChange={(e) => handleInputChange(e)}
                     id='spec'
                     required
                   />
@@ -167,9 +219,9 @@ const Register = () => {
                     type='text'
                     placeholder='Enter your hospital'
                     className='py-2 pl-2 text-[20px] border-2 ml-5 w-[40rem] rounded-xl'
-                    value={formData.hospital}
+                    value={formData.doctor_data.hospital}
                     name='hospital'
-                    onChange={handleInputChange}
+                    onChange={(e) => handleInputChange(e)}
                     id='hos'
                     required
                   />
