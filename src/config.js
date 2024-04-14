@@ -1,1 +1,1 @@
-export const BASE_URL = "panav072.pythonanywhere.com";
+export const BASE_URL = "pranav072.pythonanywhere.com";
